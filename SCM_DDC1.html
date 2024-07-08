@@ -242,7 +242,12 @@
 						throw new Error(`Response status: ${response1.status}`);
 					} else {
 					*/
-					var answer = response1.choices[0].text; // Retrieve the answer from the API response
+					const body = JSON.parse(response1.body);
+					var answer = body.choices[0].text;
+
+					//print(response1.model_dump_json(indent=2))
+					//print(response1.choices[0].text)
+					//var answer = response1.choices[0].text;
 					console.log(answer);
 					document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
 					//}
