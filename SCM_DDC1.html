@@ -233,7 +233,7 @@
 
 				// Retrieve the question from the textArea
 				var question = document.getElementById("textInput").value;
-				const data = {
+				const dataQuestion = {
 					messages: [
 						{
 							role: 'user',
@@ -242,17 +242,17 @@
 					]
 				};
 
-				fetch(apiUrl, {
+				const answer = fetch(apiUrl, {
 					method: 'POST',
 					headers: headers,
-					body: JSON.stringify(data)
+					body: JSON.stringify(dataQuestion)
 				})
 
 					.then(response => response.json())
-					.then(data => console.log(data.choices[0].message.content))
+					.then(data => data.choices[0].message.content)
 					.catch(error => console.error('Error:', error.message));
 
-				document.getElementById("apiResponseQ&A").textContent = "ok"/*answer*/;
+				document.getElementById("apiResponseQ&A").textContent = answer;
 
 			} // end else empty apiKey
 
