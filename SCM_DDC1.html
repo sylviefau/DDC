@@ -263,7 +263,7 @@
 					})
 
 					.then(data => {
-						var answer = data.choices[0].message.content; // Retrieve the answer from the API response
+						var answer = data.choices[0].text; // Retrieve the answer from the API response
 						document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
 					})
 					.catch(error => {
