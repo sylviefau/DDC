@@ -238,13 +238,14 @@
 						})
 					});
 
-					if (!response1.ok) {
+					/*if (!response1.ok) {
 						throw new Error(`Response status: ${response1.status}`);
 					} else {
-						var answer = response1.choices[0].text; // Retrieve the answer from the API response
-						print(answer);
-						document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
-					}
+					*/
+					var answer = response1.choices[0].text; // Retrieve the answer from the API response
+					print(answer);
+					document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
+					//}
 
 				} catch (error) {
 					console.error(error.message);
