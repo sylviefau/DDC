@@ -207,69 +207,49 @@
 
 			var contractType = document.getElementById("summaryTypeSelect").value;
 			var contractInfo = document.getElementById("summaryInfoSelect").value;
-			//			document.getElementById("apiResponse").textContent = "You asked for the '<strong>" + contractInfo + "</strong>'' for the contracts of type <strong>'" + contractType + "'</strong>. <br>Let me see what I can get for you.";
 			document.getElementById("apiResponse").innerHTML = "You asked for the '<strong>" + contractInfo + "</strong>' for the contracts of type <strong>'" + contractType + "'</strong>. <br>Let me see what I can get for you.";
-
-			//	document.getElementById("apiResponse").textContent = "Let me see what I could get for you.";
 		});
 
 		document.getElementById("callApiButtonQa").addEventListener("click", function () {
 
-			// OpenAI API Call
-			//var apiKey = "<API_KEY_HERE>";
+			// apiKey is filled from the Data-Driven Content;
 			var apiKey = document.getElementById("api_key").textContent;
 			if (!apiKey) {
-				// apiKey was empty string, false, 0, null, undefined, ...
 				console.error("API Key is empty");
 				document.getElementById("apiResponseQ&A").textContent = "Error: API key is empty";
 			} else {
-
-				//var urlText = document.getElementById("urlText").textContent;
-				//var article_content = document.getElementById("article_content").textContent;
-				//var apiUrl = "https://api.openai.com/v1/chat/completions";
-
-				// TEST: add chat in the url
+				// Call Azure Services
 				var apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/completions?api-version=2024-02-01";
 
-				// Retrieve the question from the textarea
+				// Retrieve the question from the textArea
 				//var question = document.getElementById("textInput").value;
 				//document.getElementById("apiResponseQ&A").textContent = "Your question is : " + question + ".Let me see what I could find !";
-				//document.getElementById("apiResponseQ&A").textContent = "API calls : work in progress";
 
 				// Make API call
-				fetch(apiUrl, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						//		"Authorization": "Bearer " + apiKey,
-						"api-key": apiKey,
-					},
-					body: JSON.stringify({
-						/*"model": "gpt-3.5-turbo",
-						"messages": [{ "role": "user", "content": "Say this is a test!" }],
-						"temperature": 0.7*/
-						//"messages": [{ "role": "system", "content": "You are a helpful assistant." }, { "role": "user", "content": "Does Azure OpenAI support customer managed keys?" }, { "role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI." }, { "role": "user", "content": "Do other Azure AI services support this too?" }]
-						"prompt": "who were the founders of Microsoft?"
-					})
-				})
-
-
-					.then(response => {
-						response.json()
-						var answer = response.choices[0].text; // Retrieve the answer from the API response
-						print(answer);
-						document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
-					})
-
-					/*		.then(data => {
-								var answer = data.choices[0].text; 
-								document.getElementById("apiResponseQ&A").textContent = answer;
-							})*/
-					.catch(error => {
-						console.error("Error:", error);
-						document.getElementById("apiResponseQ&A").textContent = "Error occurred while fetching API data = " + error;
+				try {
+					const response1 = fetch(apiUrl, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							"api-key": apiKey,
+						},
+						body: JSON.stringify({
+							"prompt": "who were the founders of Microsoft?"
+						})
 					});
 
+					if (!response1.ok) {
+						throw new Error(`Response status: ${response1.status}`);
+					} else {
+						var answer = response1.choices[0].text; // Retrieve the answer from the API response
+						print(answer);
+						document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
+					}
+
+				} catch (error) {
+					console.error(error.message);
+					document.getElementById("apiResponseQ&A").textContent = error.message;
+				}
 			} // end else empty apiKey
 
 		});
