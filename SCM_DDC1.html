@@ -213,49 +213,46 @@
 		document.getElementById("callApiButtonQa").addEventListener("click", function () {
 
 			// apiKey is filled from the Data-Driven Content;
-			var apiKey = document.getElementById("api_key").textContent;
+			const apiKey = document.getElementById("api_key").textContent;
 			if (!apiKey) {
+
 				console.error("API Key is empty");
 				document.getElementById("apiResponseQ&A").textContent = "Error: API key is empty";
+
 			} else {
+
 				// Call Azure Services
-				var apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/completions?api-version=2024-02-01";
+				const endpoint = "https://frasyf-inst1.openai.azure.com";
+				const apiUrl = `${endpoint}/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01`;
+
+				const headers = {
+					'Content-Type': 'application/json',
+					'api-key': apiKey
+				};
 
 				// Retrieve the question from the textArea
 				var question = document.getElementById("textInput").value;
-				//document.getElementById("apiResponseQ&A").textContent = "Your question is : " + question + ".Let me see what I could find !";
+				const data = {
+					messages: [
+						{
+							role: 'user',
+							content: question
+						}
+					]
+				};
 
-				// Make API call
-				try {
-					const response1 = fetch(apiUrl, {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-							"api-key": apiKey,
-						},
-						body: JSON.stringify({
-							"prompt": question
-						})
-					});
+				fetch(url, {
+					method: 'POST',
+					headers: headers,
+					body: JSON.stringify(data)
+				})
 
-					/*if (!response1.ok) {
-						throw new Error(`Response status: ${response1.status}`);
-					} else {
-					*/
-					const body = JSON.parse(response1.body);
-					var answer = body.choices[0].text;
+					.then(response => response.json())
+					.then(data => console.log(data.choices[0].message.content))
+					.catch(error => console.error('Error:', error.message));
 
-					//print(response1.model_dump_json(indent=2))
-					//print(response1.choices[0].text)
-					//var answer = response1.choices[0].text;
-					console.log(answer);
-					document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
-					//}
+				document.getElementById("apiResponseQ&A").textContent = "ok"/*answer*/;
 
-				} catch (error) {
-					console.error(error.message);
-					document.getElementById("apiResponseQ&A").textContent = error.message;
-				}
 			} // end else empty apiKey
 
 		});
