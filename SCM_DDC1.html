@@ -246,7 +246,15 @@
 						"temperature": 0.7
 					})
 				})
-					.then(response => response.json())
+
+					.then(response => {/* response.json()*/
+						console.log('API Response Status:', response.status);
+						const result = response.json();
+						console.log('API Response:', result);
+						document.getElementById("apiResponseQ&A").textContent = "Response Status:" + response.status + "API Response:" + result;
+					}
+
+					)
 					.then(data => {
 						var answer = data.choices[0].message.content; // Retrieve the answer from the API response
 						document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
