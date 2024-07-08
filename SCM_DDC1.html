@@ -227,7 +227,9 @@
 				//var urlText = document.getElementById("urlText").textContent;
 				//var article_content = document.getElementById("article_content").textContent;
 				//var apiUrl = "https://api.openai.com/v1/chat/completions";
-				var apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/completions?api-version=2024-02-01";
+
+				// TEST: add chat in the url
+				var apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01";
 
 				// Retrieve the question from the textarea
 				//var question = document.getElementById("textInput").value;
@@ -250,21 +252,22 @@
 					})
 				})
 
-					.then(response => {/* response.json()*/
-						console.log('API Response Status:', response.status);
-						const result = response.json();
-						console.log('API Response:', result);
-						document.getElementById("apiResponseQ&A").textContent = "Response Status:" + response.status + "API Response:" + result;
-					}
+					.then(response => {
+						response.json()
+						/*	console.log('API Response Status:', response.status);
+							const result = response.json();
+							console.log('API Response:', result);
+							document.getElementById("apiResponseQ&A").textContent = "Response Status:" + response.status + "API Response:" + result;
+						*/
+					})
 
-					)
 					.then(data => {
 						var answer = data.choices[0].message.content; // Retrieve the answer from the API response
 						document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
 					})
 					.catch(error => {
 						console.error("Error:", error);
-						document.getElementById("apiResponseQ&A").textContent = "Error occurred while fetching API data. Error= " + error;
+						document.getElementById("apiResponseQ&A").textContent = "Error occurred while fetching API data = " + error;
 					});
 
 			} // end else empty apiKey
