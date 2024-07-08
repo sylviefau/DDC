@@ -218,38 +218,45 @@
 			// OpenAI API Call
 			//var apiKey = "<API_KEY_HERE>";
 			var apiKey = document.getElementById("api_key").textContent;
-			//var urlText = document.getElementById("urlText").textContent;
-			//var article_content = document.getElementById("article_content").textContent;
-			var apiUrl = "https://api.openai.com/v1/chat/completions";
+			if (!apiKey) {
+				// apiKey was empty string, false, 0, null, undefined, ...
+				console.error("API Key is empty");
+				document.getElementById("apiResponseQ&A").textContent = "Error: API key is empty";
+			} else {
 
-			// Retrieve the question from the textarea
-			//var question = document.getElementById("textInput").value;
-			//document.getElementById("apiResponseQ&A").textContent = "Your question is : " + question + ".Let me see what I could find !";
-			//document.getElementById("apiResponseQ&A").textContent = "API calls : work in progress";
+				//var urlText = document.getElementById("urlText").textContent;
+				//var article_content = document.getElementById("article_content").textContent;
+				var apiUrl = "https://api.openai.com/v1/chat/completions";
 
-			// Make API call
-			fetch(apiUrl, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					"Authorization": "Bearer " + apiKey,
-				},
-				body: JSON.stringify({
-					"model": "gpt-3.5-turbo",
-					"messages": [{ "role": "user", "content": "Say this is a test!" }],
-					"temperature": 0.7
+				// Retrieve the question from the textarea
+				//var question = document.getElementById("textInput").value;
+				//document.getElementById("apiResponseQ&A").textContent = "Your question is : " + question + ".Let me see what I could find !";
+				//document.getElementById("apiResponseQ&A").textContent = "API calls : work in progress";
+
+				// Make API call
+				fetch(apiUrl, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": "Bearer " + apiKey,
+					},
+					body: JSON.stringify({
+						"model": "gpt-3.5-turbo",
+						"messages": [{ "role": "user", "content": "Say this is a test!" }],
+						"temperature": 0.7
+					})
 				})
-			})
-				.then(response => response.json())
-				.then(data => {
-					var answer = data.choices[0].message.content; // Retrieve the answer from the API response
-					document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
-				})
-				.catch(error => {
-					console.error("Error:", error);
-					document.getElementById("apiResponseQ&A").textContent = "Error occurred while fetching API data.";
-				});
+					.then(response => response.json())
+					.then(data => {
+						var answer = data.choices[0].message.content; // Retrieve the answer from the API response
+						document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
+					})
+					.catch(error => {
+						console.error("Error:", error);
+						document.getElementById("apiResponseQ&A").textContent = "Error occurred while fetching API data. Error= " + error;
+					});
 
+			} // end else empty apiKey
 
 		});
 
