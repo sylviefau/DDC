@@ -222,7 +222,7 @@
 				var apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/completions?api-version=2024-02-01";
 
 				// Retrieve the question from the textArea
-				//var question = document.getElementById("textInput").value;
+				var question = document.getElementById("textInput").value;
 				//document.getElementById("apiResponseQ&A").textContent = "Your question is : " + question + ".Let me see what I could find !";
 
 				// Make API call
@@ -234,7 +234,7 @@
 							"api-key": apiKey,
 						},
 						body: JSON.stringify({
-							"prompt": "who were the founders of Microsoft?"
+							"prompt": question
 						})
 					});
 
@@ -243,7 +243,7 @@
 					} else {
 					*/
 					var answer = response1.choices[0].text; // Retrieve the answer from the API response
-					print(answer);
+					console.log(answer);
 					document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
 					//}
 
