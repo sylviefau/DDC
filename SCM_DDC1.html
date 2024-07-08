@@ -253,19 +253,18 @@
 					})
 				})
 
+
 					.then(response => {
 						response.json()
-						/*	console.log('API Response Status:', response.status);
-							const result = response.json();
-							console.log('API Response:', result);
-							document.getElementById("apiResponseQ&A").textContent = "Response Status:" + response.status + "API Response:" + result;
-						*/
-					})
-
-					.then(data => {
-						var answer = data.choices[0].text; // Retrieve the answer from the API response
+						var answer = response.choices[0].text; // Retrieve the answer from the API response
+						print(answer);
 						document.getElementById("apiResponseQ&A").textContent = answer; // Display the answer
 					})
+
+					/*		.then(data => {
+								var answer = data.choices[0].text; 
+								document.getElementById("apiResponseQ&A").textContent = answer;
+							})*/
 					.catch(error => {
 						console.error("Error:", error);
 						document.getElementById("apiResponseQ&A").textContent = "Error occurred while fetching API data = " + error;
