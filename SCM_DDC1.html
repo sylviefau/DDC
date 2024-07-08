@@ -242,17 +242,18 @@
 					]
 				};
 
-				const answer = fetch(apiUrl, {
+				fetch(apiUrl, {
 					method: 'POST',
 					headers: headers,
 					body: JSON.stringify(dataQuestion)
 				})
 
 					.then(response => response.json())
-					.then(data => data.choices[0].message.content)
+					.then(data =>
+						document.getElementById("apiResponseQ&A").textContent = data.choices[0].message.content
+					)
 					.catch(error => console.error('Error:', error.message));
 
-				document.getElementById("apiResponseQ&A").textContent = "My answer is " + answer;
 
 			} // end else empty apiKey
 
