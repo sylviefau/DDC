@@ -229,7 +229,7 @@
 				//var apiUrl = "https://api.openai.com/v1/chat/completions";
 
 				// TEST: add chat in the url
-				var apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01";
+				var apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/completions?api-version=2024-02-01";
 
 				// Retrieve the question from the textarea
 				//var question = document.getElementById("textInput").value;
@@ -248,7 +248,8 @@
 						/*"model": "gpt-3.5-turbo",
 						"messages": [{ "role": "user", "content": "Say this is a test!" }],
 						"temperature": 0.7*/
-						"messages": [{ "role": "system", "content": "You are a helpful assistant." }, { "role": "user", "content": "Does Azure OpenAI support customer managed keys?" }, { "role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI." }, { "role": "user", "content": "Do other Azure AI services support this too?" }]
+						//"messages": [{ "role": "system", "content": "You are a helpful assistant." }, { "role": "user", "content": "Does Azure OpenAI support customer managed keys?" }, { "role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI." }, { "role": "user", "content": "Do other Azure AI services support this too?" }]
+						"prompt": "who were the founders of Microsoft?"
 					})
 				})
 
