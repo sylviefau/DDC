@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <script src='./util/messagingUtil.js'></script>
+<script>
+	require('dotenv').config()
+	apiKey = process.env.API_KEY
+	console.log(apiKey);
+</script>
 
 <head>
 	<title>Smart Contracts Management</title>
@@ -164,6 +169,13 @@
 		</div>
 
 		<div id="EntityExtraction" class="tab-content">
+			<div class="summary-type-container">
+				<label for="summaryTypeSelect">Choose the contract file:</label>
+				<select id="summaryTypeSelect">
+					<option value="Master Agreement">Master Agreement A</option>
+					<option value="Master Agreement">Master Agreement B</option>
+				</select>
+			</div>
 			<button type="submit" class="btn-primary" id="callApiButtonEntity">Extract Entities</button>
 			<p>List of Entities:</p>
 
@@ -260,8 +272,51 @@
 		});
 
 		document.getElementById("callApiButtonEntity").addEventListener("click", function () {
-			document.getElementById("checkedEntities").textContent = "Entity extraction : work in progress";
+			//document.getElementById("checkedEntities").textContent = "Entity extraction : work in progress";
 
+			// apiKey is filled from the Data-Driven Content;
+			const apiKey = document.getElementById("api_key").textContent;
+			if (!apiKey) {
+
+				console.error("API Key is empty");
+				document.getElementById("checkedEntities").textContent = "Error: API key is empty";
+
+			} else {
+
+				// Call Azure Services
+				const apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01";
+
+				const headers = {
+					'Content-Type': 'application/json',
+					'api-key': apiKey
+				};
+
+				// Retrieve the question from the textArea
+				var question = "Extract the person name, company name.\n\nHello.My name is Robert Smith. I’m calling from Contoso Insurance, Delaware.";
+				//TODO : get file content paragraph : document.getElementById("textInput").value;
+				const dataQuestion = {
+					messages: [
+						{
+							role: 'user',
+							content: question
+						}
+					]
+				};
+
+				fetch(apiUrl, {
+					method: 'POST',
+					headers: headers,
+					body: JSON.stringify(dataQuestion)
+				})
+
+					.then(response => response.json())
+					.then(data =>
+						document.getElementById("checkedEntities").textContent = data.choices[0].message.content
+					)
+					.catch(error => console.error('Error:', error.message));
+
+
+			} // end else empty apiKey
 		});
 
 	</script>
