@@ -177,13 +177,16 @@
 				</select>
 			</div>
 			<button type="submit" class="btn-primary" id="callApiButtonEntity">Extract Entities</button>
-			<p>List of Entities:</p>
+			<div class="api-response-box">
+				<p><span id="checkedEntities"></span></p>
+			</div>
+			<!--<p>List of Entities:</p>
 
 			<div id="entityList"></div>
 			<p hidden><button id="getCheckedEntitiesButton" style="display:none;">Get Checked Entities</button></p>
 			<p hidden>
 			<pre id="checkedEntities"></pre>
-			</p>
+			</p>-->
 		</div>
 	</div>
 
@@ -292,7 +295,7 @@
 				};
 
 				// Retrieve the question from the textArea
-				var question = "Extract the person name, company name.\n\nHello.My name is Robert Smith. I’m calling from Contoso Insurance, Delaware.";
+				var question = "Extract the company name, amount of capital, RCS number and location from the text below.\n\nGREEN SUPLLY, a Société par Actions Simplifiée with a capital of 7.242.928 € and Trade Register number RCS  Melun  B  158.741.326  having  its  registered  office  located  at  14 rue de Villiers 75017 Paris FRANCE acting for the purpose of this Agreement in its own name and in the name and on behalf of its Affiliates (hereafter “Supplier” or “GREEN SUPLLY”).\nEND\n\nThe company name is GREEN SUPLLY, the amount of capital is 7.242.928 €, the RCS number is B 158.741.326 and the location is 14 rue de Villiers 75017 Paris FRANCE";
 				//TODO : get file content paragraph : document.getElementById("textInput").value;
 				const dataQuestion = {
 					messages: [
