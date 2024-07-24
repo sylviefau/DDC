@@ -177,6 +177,7 @@
 				</select>
 			</div>
 
+			<label for="summaryTypeSelect">Your prompt:</label>
 			<textarea class="form-input" id="textInput" rows="4" style="width: calc(100% - 20px); /* Subtract padding */ 
 															padding: 10px; border-radius: 8px; border: 1px solid #ccc; 																
 															background-color: #f8f9fa; font-family: Arial, sans-serif; 
@@ -317,8 +318,8 @@
 
 					.then(response => response.json())
 					.then(data =>
-						//document.getElementById("checkedEntities").textContent = data.choices[0].message.content
-						document.getElementById("checkedEntities").textContent = "Your question: " + question + "and the answer: " + data.choices[0].message.content
+						document.getElementById("checkedEntities").textContent = data.choices[0].message.content
+						//document.getElementById("checkedEntities").textContent = "Your question: " + question + "and the answer: " + data.choices[0].message.content
 					)
 					.catch(error => console.error('Error:', error.message));
 
