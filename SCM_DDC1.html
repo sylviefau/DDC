@@ -176,7 +176,7 @@
 					<option value="Master Agreement">Master Agreement B</option>
 				</select>
 			</div>
-			<button type="submit" class="btn-primary" id="callApiButtonEntity">Extract Entities</button>
+			<button type="submit" class="btn-primary" id="callApiButtonEntity">Extract the Contract Metadata</button>
 			<div class="api-response-box">
 				<p><span id="checkedEntities"></span></p>
 			</div>
@@ -272,8 +272,6 @@
 		});
 
 		document.getElementById("callApiButtonEntity").addEventListener("click", function () {
-			//document.getElementById("checkedEntities").textContent = "Entity extraction : work in progress";
-
 			// apiKey is filled from the Data-Driven Content;
 			const apiKey = document.getElementById("api_key").textContent;
 			if (!apiKey) {
@@ -292,7 +290,7 @@
 				};
 
 				// Retrieve the question from the textArea
-				var question = "Extract the location from the text below.\n\nThe Olympics starts in Paris.";
+				var question = "Extract the company name from the text below.\n\nThe company name is GREEN SUPLLY.";
 				//var question = "Extract the company name, amount of capital, RCS number and location from the text below.\n\nGREEN SUPLLY, a Société par Actions Simplifiée with a capital of 7.242.928 € and Trade Register number RCS  Melun  B  158.741.326  having  its  registered  office  located  at  14 rue de Villiers 75017 Paris FRANCE acting for the purpose of this Agreement in its own name and in the name and on behalf of its Affiliates (hereafter “Supplier” or “GREEN SUPLLY”).\nEND\n\nThe company name is GREEN SUPLLY, the amount of capital is 7.242.928 €, the RCS number is B 158.741.326 and the location is 14 rue de Villiers 75017 Paris FRANCE";
 				//TODO : get file content paragraph : document.getElementById("textInput").value;
 				const dataQuestion = {
