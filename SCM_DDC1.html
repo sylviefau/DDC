@@ -400,7 +400,7 @@
 								console.log("*** Tool calls");
 							}*/
 
-							document.getElementById("checkedEntities").textContent = data.choices[0].message;
+							document.getElementById("checkedEntities").textContent = data.choices[0].message.content;
 
 							//const function_call = data.choices[0].finish_reason === "function_call";
 							/*try {
