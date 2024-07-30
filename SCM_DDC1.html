@@ -412,7 +412,7 @@
 									}
 								} else {
 									console.log("*** No function call returned - display message instead");
-									document.getElementById("checkedEntities").textContent = data.choices[0].message.content;
+									document.getElementById("checkedEntities").textContent = JSON.stringify(data.choices[0].message.content);
 								}
 							}
 							catch (e) {
