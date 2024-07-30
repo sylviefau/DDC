@@ -374,7 +374,8 @@
 								"required": []
 							}
 						}
-					]
+					],
+					function_call: "auto"
 				};
 
 				fetch(apiUrl, {
@@ -391,8 +392,9 @@
 						if (data && data.choices && data.choices[0] && data.choices[0].message) {
 							console.log("Message data received");
 
-							var content = data.choices[0].message.function_call.arguments;
 							try {
+								var content = data.choices[0].message.function_call.arguments;
+								//try {
 								console.log("Before Parsing entitiesAndRelationships");
 								var entitiesAndRelationships = JSON.parse(content);
 								console.log("After Parsing entitiesAndRelationships");
