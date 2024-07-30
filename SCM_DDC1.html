@@ -319,21 +319,6 @@
 							"name": "get_json_format", "parameters": {
 								"type": "object",
 								"properties": {
-									"Persons": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"name": {
-													"type": "string"
-												}
-											},
-											"required": ["id", "name"]
-										}
-									},
 									"Companies": {
 										"type": "array",
 										"items": {
@@ -367,36 +352,6 @@
 									"relationship": {
 										"type": "object",
 										"properties": {
-											"persontocompany": {
-												"type": "array",
-												"items": {
-													"type": "object",
-													"properties": {
-														"personId": {
-															"type": "string"
-														},
-														"companyId": {
-															"type": "string"
-														}
-													},
-													"required": ["personId", "companyId"]
-												}
-											},
-											"persontoaddress": {
-												"type": "array",
-												"items": {
-													"type": "object",
-													"properties": {
-														"personId": {
-															"type": "string"
-														},
-														"addressId": {
-															"type": "string"
-														}
-													},
-													"required": ["personId", "addressId"]
-												}
-											},
 											"companytoaddress": {
 												"type": "array",
 												"items": {
@@ -410,24 +365,6 @@
 														}
 													},
 													"required": ["companyId", "addressId"]
-												}
-											},
-											"persontoperson": {
-												"type": "array",
-												"items": {
-													"type": "object",
-													"properties": {
-														"person1Id": {
-															"type": "string"
-														},
-														"person2Id": {
-															"type": "string"
-														},
-														"relationshipType": {
-															"type": "string"
-														}
-													},
-													"required": ["person1Id", "person2Id", "relationshipType"]
 												}
 											}
 										},
@@ -456,8 +393,9 @@
 
 							var content = data.choices[0].message.function_call.arguments;
 							try {
+								console.log("Before Parsing entitiesAndRelationships");
 								var entitiesAndRelationships = JSON.parse(content);
-								console.log("Parsing entitiesAndRelationships");
+								console.log("After Parsing entitiesAndRelationships");
 
 								// Clear previous entities
 								document.getElementById("checkedEntities").innerHTML = "";
