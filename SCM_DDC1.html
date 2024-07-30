@@ -393,6 +393,11 @@
 
 							try {
 								if (function_call) {
+
+									fct_name = data.choices[0].message.function_call.name;
+									fct_arg = data.choices[0].message.function_call.arguments;
+									print(fct_name, fct_arg);
+
 									var content = data.choices[0].message.function_call.arguments;
 									console.log("*** Before Parsing entitiesAndRelationships");
 									var entitiesAndRelationships = JSON.parse(content);
@@ -407,7 +412,7 @@
 									}
 								} else {
 									console.log("*** No function call returned - display message instead");
-									document.getElementById("checkedEntities").textContent = data.choices[0].message;
+									document.getElementById("checkedEntities").textContent = data.choices[0].message.content;
 								}
 							}
 							catch (e) {
