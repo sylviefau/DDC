@@ -452,10 +452,21 @@
 
 						//document.getElementById("checkedEntities").textContent = data.choices[0].message.content
 						if (data && data.choices && data.choices[0] && data.choices[0].message) {
-							console.log("Message received");
+							console.log("Message data received");
+
+							var content = data.choices[0].message.function_call.arguments;
+							try {
+								var entitiesAndRelationships = JSON.parse(content);
+								console.log("Parsed Entities and Relationships:", entitiesAndRelationships.Persons); // Log the parsed entities and relationships for debugging
+
+							}
+							catch (e) {
+								console.error("Parsing error:", e);
+								document.getElementById("checkedEntities").textContent = "Error parsing the API response.";
+							}
+
 						}
-					}
-					)
+					})
 					.catch(error => console.error('Error:', error.message));
 
 
