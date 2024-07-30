@@ -412,7 +412,17 @@
 									}
 								} else {
 									console.log("*** No function call returned - display message instead");
-									document.getElementById("checkedEntities").textContent = JSON.stringify(data.choices[0].message.content);
+									console.log("*** Content returned: ", data.choices[0].message.content)
+
+									const content = data.choices[0].message.content;
+									const parsedContent = JSON.parse(content);
+									if (Array.isArray(parsedContent)) {
+										console.log("*** Parsed content in Json")
+									} else {
+										console.error("Invalid format: Iterable array should be an array.");
+									}
+
+									document.getElementById("checkedEntities").textContent = parsedContent;
 								}
 							}
 							catch (e) {
