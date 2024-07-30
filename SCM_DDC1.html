@@ -177,7 +177,7 @@
 				</select>
 			</div>
 
-			<label for="summaryTypeSelect">Your prompt:</label>
+			<label for="summaryTypeSelect">Enter your request:</label>
 			<textarea class="form-input" id="textEntitiesInput" rows="4" style="width: calc(100% - 20px); /* Subtract padding */ 
 															padding: 10px; border-radius: 8px; border: 1px solid #ccc; 																
 															background-color: #f8f9fa; font-family: Arial, sans-serif; 
@@ -457,7 +457,16 @@
 							var content = data.choices[0].message.function_call.arguments;
 							try {
 								var entitiesAndRelationships = JSON.parse(content);
-								console.log("Parsed Entities and Relationships:", entitiesAndRelationships.Persons); // Log the parsed entities and relationships for debugging
+								console.log("Parsing entitiesAndRelationships");
+
+								// Clear previous entities
+								document.getElementById("checkedEntities").innerHTML = "";
+
+								if (entitiesAndRelationships.Companies) {
+									console.log("Parsed Companies:", entitiesAndRelationships.Companies); // Log the parsed entities and relationships for debugging
+									//	renderEntitiesWithCheckboxes(entitiesAndRelationships.Companies, "Companies");
+									document.getElementById("checkedEntities").textContent = entitiesAndRelationships.Companies;
+								}
 
 							}
 							catch (e) {
