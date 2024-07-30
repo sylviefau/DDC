@@ -306,83 +306,159 @@
 				// Retrieve the question from the textArea
 				//var question = "Extract the company name, RCS number and location from the text below.\n\nGREEN SUPLLY, a Société par Actions Simplifiée with Trade Register number RCS  158.741.326  having  its  registered  office  located  at  14 rue de Villiers 75017 Paris FRANCE acting for the purpose of this Agreement in its own name and in the name and on behalf of its Affiliates.";
 				var text_content = document.getElementById("textEntitiesInput").value;
-				const dataQuestion = {
-					messages: [
-						{
-							role: 'user',
-							content: "Using the following text, generate a list of Company entities, a list of Address entities, and the relationships between those entities, in valid json format. Use a 32 character hexadecimal globally unique identifier as the unique identifier for each entity. Generate a new json array for relationships between Company to Address under a object name companytoaddress. Each relationship type should be in a separate list. Be sure to use valid json format in your response, where each property is quoted, and each object is delineated with an open { and a close }. The entire response should be a json compliant string, there should be no extraneous verbiage in your response. Here is the text:" + text_content
-						}
-					],
-
-					functions: [
-						{
-							"name": "get_json_format", "parameters": {
-								"type": "object",
-								"properties": {
-									"Companies": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"name": {
-													"type": "string"
-												}
-											},
-											"required": ["id", "name"]
-										}
-									},
-									"Addresses": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"location": {
-													"type": "string"
-												}
-											},
-											"required": ["id", "location"]
-										}
-									},
-									"relationship": {
-										"type": "object",
-										"properties": {
-											"companytoaddress": {
-												"type": "array",
-												"items": {
-													"type": "object",
-													"properties": {
-														"companyId": {
-															"type": "string"
-														},
-														"addressId": {
-															"type": "string"
-														}
+				/*	const dataQuestion = {
+						messages: [
+							{
+								role: 'user',
+								content: "Using the following text, generate a list of Company entities, a list of Address entities, and the relationships between those entities, in valid json format. Use a 32 character hexadecimal globally unique identifier as the unique identifier for each entity. Generate a new json array for relationships between Company to Address under a object name companytoaddress. Each relationship type should be in a separate list. Be sure to use valid json format in your response, where each property is quoted, and each object is delineated with an open { and a close }. The entire response should be a json compliant string, there should be no extraneous verbiage in your response. Here is the text:" + text_content
+							}
+						],
+	
+						functions: [
+							{
+								"name": "get_json_format", "parameters": {
+									"type": "object",
+									"properties": {
+										"Companies": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
 													},
-													"required": ["companyId", "addressId"]
-												}
+													"name": {
+														"type": "string"
+													}
+												},
+												"required": ["id", "name"]
 											}
 										},
-										"required": []
-									}
-								},
-								"required": []
+										"Addresses": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"location": {
+														"type": "string"
+													}
+												},
+												"required": ["id", "location"]
+											}
+										},
+										"relationship": {
+											"type": "object",
+											"properties": {
+												"companytoaddress": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"properties": {
+															"companyId": {
+																"type": "string"
+															},
+															"addressId": {
+																"type": "string"
+															}
+														},
+														"required": ["companyId", "addressId"]
+													}
+												}
+											},
+											"required": []
+										}
+									},
+									"required": []
+								}
 							}
-						}
-					],
-					function_call: "auto"
-				};
-
+						],
+						function_call: "auto"
+					};
+	*/
 				fetch(apiUrl, {
 					method: 'POST',
 					headers: headers,
-					body: JSON.stringify(dataQuestion)
+					body: JSON.stringify({
+						"model": "gpt-3.5-turbo",
+						"messages": [
+							{
+								role: 'user',
+								content: "Using the following text, generate a list of Company entities, a list of Address entities, and the relationships between those entities, in valid json format. Use a 32 character hexadecimal globally unique identifier as the unique identifier for each entity. Generate a new json array for relationships between Company to Address under a object name companytoaddress. Each relationship type should be in a separate list. Be sure to use valid json format in your response, where each property is quoted, and each object is delineated with an open { and a close }. The entire response should be a json compliant string, there should be no extraneous verbiage in your response. Here is the text:" + text_content
+							}
+						],
+						"functions": [
+							{
+								"name": "get_json_format", "parameters": {
+									"type": "object",
+									"properties": {
+										"Companies": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"name": {
+														"type": "string"
+													}
+												},
+												"required": ["id", "name"]
+											}
+										},
+										"Addresses": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"location": {
+														"type": "string"
+													}
+												},
+												"required": ["id", "location"]
+											}
+										},
+										"relationship": {
+											"type": "object",
+											"properties": {
+												"companytoaddress": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"properties": {
+															"companyId": {
+																"type": "string"
+															},
+															"addressId": {
+																"type": "string"
+															}
+														},
+														"required": ["companyId", "addressId"]
+													}
+												}
+											},
+											"required": []
+										}
+									},
+									"required": []
+								}
+							}
+						],
+						"functions_call": "auto"
+					}
+					)
 				})
+					/*fetch(apiUrl, {
+						method: 'POST',
+						headers: headers,
+						body: JSON.stringify(dataQuestion)
+					})*/
 
 					.then(response => response.json())
 					.then(data => {
