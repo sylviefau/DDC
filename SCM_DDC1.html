@@ -397,8 +397,6 @@
 							console.log("*** Message data received");
 
 							const responseMessage = data.choices[0].message;
-
-							// Step 2: check if the model wanted to call a function
 							const toolCalls = responseMessage.tool_calls;
 							console.log("*** Tool calls");
 
@@ -406,46 +404,14 @@
 
 								for (const toolCall of toolCalls) {
 									const functionName = toolCall.function.name;
-									console.log("*** for each tool call");
+									console.log("*** Function name is :", functionName);
 									const functionArgs = JSON.parse(toolCall.function.arguments);
-									console.log("*** Parsing arguments done");
 									console.log(functionArgs);
-									displayEntities(functionArgs);
-
-									//console.log(functionArgs.Companies[0].name);
+									renderEntities(functionArgs);
 
 								}
 
 							}
-
-
-							/*const function_call = data.choices[0].finish_reason === "function_call";
-							try {
-								if (function_call) {
-	
-									var content = data.choices[0].message.function_call.arguments;
-									console.log("*** Before Parsing entitiesAndRelationships");
-									var entitiesAndRelationships = JSON.parse(content);
-									console.log("*** After Parsing entitiesAndRelationships");
-	
-									// Clear previous entities
-									document.getElementById("checkedEntities").innerHTML = "";
-	
-									if (entitiesAndRelationships.Companies) {
-										console.log("*** Parsed Companies:", entitiesAndRelationships.Companies); // Log the parsed entities and relationships for debugging
-										document.getElementById("checkedEntities").textContent = entitiesAndRelationships.Companies;
-									}
-								} else {
-									console.log("*** No function call returned - display message instead");
-									console.log("*** Content returned: ", data.choices[0].message.content)
-	
-									document.getElementById("checkedEntities").textContent = data.choices[0].message.content;
-								}
-							}
-							catch (e) {
-								console.error("Parsing error:", e);
-								document.getElementById("checkedEntities").textContent = "Error parsing the API response.";
-							}*/
 
 						}
 					})
@@ -455,9 +421,7 @@
 			} // end else empty apiKey
 		});
 
-
-
-		function displayEntities(functionArgs) {
+		function renderEntities(functionArgs) {
 
 			console.log("*** Display entities result");
 
