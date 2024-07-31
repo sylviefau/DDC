@@ -246,7 +246,7 @@
 											"required": ["id", "location"]
 										}
 									},
-									"relationship": {
+									"Relationships": {
 										"type": "object",
 										"properties": {
 											"companytoaddress": {
@@ -316,6 +316,11 @@
 										renderEntities(functionArgs.Addresses, "Addresses");
 									}
 
+									if (functionArgs.Relationships) {
+										renderEntitiesRel(functionArgs.Relationships, "Relationships");
+									}
+
+
 								}
 
 							}
@@ -339,6 +344,21 @@
 			container.innerHTML += text;
 		};
 
+		function renderEntitiesRel(entities, entityType) {
+			var container = document.getElementById("checkedEntities");
+			var text = `<p><strong>${entityType}:</strong></p>`;
+			entities.forEach(entity => {
+				console.log("*** Render relationship:", entity)
+
+				// TODO !!!
+				//				entity.companytoaddress[0].companyId
+
+				//				var nameOrLoc = entity.name || entity.location;
+				//				text += `<input type="checkbox" class="${entityType}" value="${entity.id}" data-name="${nameOrLoc}"> ${nameOrLoc}<br>`;
+
+			});
+			container.innerHTML += text;
+		}
 	</script>
 </body>
 
