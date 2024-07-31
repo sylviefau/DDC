@@ -402,12 +402,22 @@
 
 							if (responseMessage.tool_calls) {
 
+								// Clear previous entities
+								document.getElementById("checkedEntities").innerHTML = "";
+
 								for (const toolCall of toolCalls) {
 									const functionName = toolCall.function.name;
 									console.log("*** Function name is :", functionName);
 									const functionArgs = JSON.parse(toolCall.function.arguments);
 									console.log(functionArgs);
-									renderEntities(functionArgs);
+
+									if (functionArgs.Companies) {
+										renderEntities(functionArgs.Companies, "Companies");
+									}
+
+									if (functionArgs.Addresses) {
+										renderEntities(functionArgs.Addresses, "Addresses");
+									}
 
 								}
 
@@ -421,24 +431,36 @@
 			} // end else empty apiKey
 		});
 
-		function renderEntities(functionArgs) {
+		// Function to render entities with checkboxes
+		function renderEntities(entities, entityType) {
+			var container = document.getElementById("checkedEntities");
+			var text = `<p><strong>${entityType}:</strong></p>`;
+			entities.forEach(entity => {
+				console.log("*** Render entity:", entity)
+				var idOrName = entity.name || entity.id;
+				text += `<input type="checkbox" class="${entityType}" value="${entity.id}" data-name="${idOrName}"> ${idOrName}<br>`;
+			});
+			container.innerHTML += text;
+		};
 
-			console.log("*** Display entities result");
-
-			var companyName = "No company found";
-			if (functionArgs.Companies && functionArgs.Companies[0] && functionArgs.Companies[0].name) {
-				companyName = functionArgs.Companies[0].name;
-			}
-
-			var locationName = "No location found";
-			if (functionArgs.Addresses && functionArgs.Addresses[0] && functionArgs.Addresses[0].name) {
-				locationName = functionArgs.Addresses[0].name;
-			}
-
-			var entitiesToPrint = "We found the following entities : \n\n Company: " + companyName + " \n\nand Location: " + locationName;
-			document.getElementById("checkedEntities").textContent = entitiesToPrint;
-
-		}
+		/*	function renderEntities(functionArgs) {
+	
+				console.log("*** Display entities result");
+	
+				var companyName = "No company found";
+				if (functionArgs.Companies && functionArgs.Companies[0] && functionArgs.Companies[0].name) {
+					companyName = functionArgs.Companies[0].name;
+				}
+	
+				var locationName = "No location found";
+				if (functionArgs.Addresses && functionArgs.Addresses[0] && functionArgs.Addresses[0].name) {
+					locationName = functionArgs.Addresses[0].name;
+				}
+	
+				var entitiesToPrint = "We found the following entities : \n\n Company: " + companyName + " \n\nand Location: " + locationName;
+				document.getElementById("checkedEntities").textContent = entitiesToPrint;
+	
+			}*/
 
 	</script>
 </body>
