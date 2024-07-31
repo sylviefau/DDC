@@ -403,11 +403,16 @@
 							console.log("*** Tool calls");
 
 							if (responseMessage.tool_calls) {
-								// Step 3: call the function
-								// Note: the JSON response may not always be valid; be sure to handle errors
-								const availableFunctions = {
-									get_json_format: getJsonFormat,
-								}; // only one function in this example, but you can have multiple
+
+								for (const toolCall of toolCalls) {
+									const functionName = toolCall.function.name;
+									console.log("*** for each tool call");
+									const functionArgs = JSON.parse(toolCall.function.arguments);
+									console.log(functionArgs.Companies.id);
+									console.log(functionArgs.Companies.name);
+
+								}
+
 							}
 
 							//document.getElementById("checkedEntities").textContent = data.choices[0].message.content;
