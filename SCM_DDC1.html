@@ -410,9 +410,9 @@
 									const functionArgs = JSON.parse(toolCall.function.arguments);
 									console.log("*** Parsing arguments done");
 									console.log(functionArgs);
-									console.log(functionArgs.Companies[0].name);
-									console.log(functionArgs.Addresses[0].location);
-									document.getElementById("checkedEntities").textContent = functionArgs.Addresses[0].location;
+									displayEntities(functionArgs);
+
+									//console.log(functionArgs.Companies[0].name);
 
 								}
 
@@ -454,6 +454,27 @@
 
 			} // end else empty apiKey
 		});
+
+
+
+		function displayEntities(functionArgs) {
+
+			console.log("*** Display entities result");
+
+			var companyName = "No company found";
+			if (functionArgs.Companies && functionArgs.Companies[0] && functionArgs.Companies[0].name) {
+				companyName = functionArgs.Companies[0].name;
+			}
+
+			var locationName = "No location found";
+			if (functionArgs.Addresses && functionArgs.Addresses[0] && functionArgs.Addresses[0].name) {
+				locationName = functionArgs.Addresses[0].name;
+			}
+
+			var entitiesToPrint = "We found the following entities : \n\n Company: " + companyName + " \n\nand Location: " + locationName;
+			document.getElementById("checkedEntities").textContent = entitiesToPrint;
+
+		}
 
 	</script>
 </body>
