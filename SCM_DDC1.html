@@ -313,7 +313,7 @@
 					}
 				];
 
-				const functions = [
+				const tools = [
 					{
 						"type": "function",
 						"function": {
@@ -393,27 +393,37 @@
 						console.log("API Response:", data); // Log the API response for debugging
 
 
-						if (data && data.choices && data.choices[0] /*&& data.choices[0].message*/) {
+						if (data && data.choices && data.choices[0] && data.choices[0].message) {
 							console.log("*** Message data received");
 
-							/*if (data.choices[0].tool_calls) {
-								console.log("*** Tool calls");
-							}*/
+							const responseMessage = data.choices[0].message;
+
+							// Step 2: check if the model wanted to call a function
+							const toolCalls = responseMessage.tool_calls;
+							console.log("*** Tool calls");
+
+							if (responseMessage.tool_calls) {
+								// Step 3: call the function
+								// Note: the JSON response may not always be valid; be sure to handle errors
+								const availableFunctions = {
+									get_json_format: getJsonFormat,
+								}; // only one function in this example, but you can have multiple
+							}
 
 							//document.getElementById("checkedEntities").textContent = data.choices[0].message.content;
 
-							const function_call = data.choices[0].finish_reason === "function_call";
+							/*const function_call = data.choices[0].finish_reason === "function_call";
 							try {
 								if (function_call) {
-
+	
 									var content = data.choices[0].message.function_call.arguments;
 									console.log("*** Before Parsing entitiesAndRelationships");
 									var entitiesAndRelationships = JSON.parse(content);
 									console.log("*** After Parsing entitiesAndRelationships");
-
+	
 									// Clear previous entities
 									document.getElementById("checkedEntities").innerHTML = "";
-
+	
 									if (entitiesAndRelationships.Companies) {
 										console.log("*** Parsed Companies:", entitiesAndRelationships.Companies); // Log the parsed entities and relationships for debugging
 										document.getElementById("checkedEntities").textContent = entitiesAndRelationships.Companies;
@@ -421,14 +431,14 @@
 								} else {
 									console.log("*** No function call returned - display message instead");
 									console.log("*** Content returned: ", data.choices[0].message.content)
-
+	
 									document.getElementById("checkedEntities").textContent = data.choices[0].message.content;
 								}
 							}
 							catch (e) {
 								console.error("Parsing error:", e);
 								document.getElementById("checkedEntities").textContent = "Error parsing the API response.";
-							}
+							}*/
 
 						}
 					})
