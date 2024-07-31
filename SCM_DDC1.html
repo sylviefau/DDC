@@ -1,114 +1,122 @@
 <!DOCTYPE html>
 <html>
 <script src='./util/messagingUtil.js'></script>
+<script src='./util/styles.css'></script>
+
 <script>
 	require('dotenv').config()
 	apiKey = process.env.API_KEY
 	console.log(apiKey);
+
+	// Fill in textArea for prompt
+	//var textForEntities = "GREEN SUPPLY, a Société par Actions Simplifiée with Trade Register number RCS  158.741.326  having  its  registered  office  located  at  14 rue de Villiers 75017 Paris FRANCE acting for the purpose of this Agreement in its own name and in the name and on behalf of its Affiliates."
+	//document.getElementById('textEntitiesInput').value = textForEntities;
+
 </script>
 
 <head>
 	<title>Smart Contracts Management</title>
+
 	<style>
 		body {
-			background-color: #f8f9fa;
-			font-family: Arial, sans-serif;
+			background - color: #f8f9fa;
+			font - family: Arial, sans - serif;
 			margin: 0;
 			padding: 0;
 		}
 
 		.container {
-			background-color: #fff;
-			border-radius: 8px;
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-			max-width: 800px;
+			background - color: #fff;
+			border - radius: 8px;
+			box - shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			max - width: 800px;
 			margin: 50px auto;
 			overflow: hidden;
 			/* Ensures the container wraps around floated elements */
 		}
 
 		.tabs {
-			border-bottom: 2px solid #0056b3;
+			border - bottom: 2px solid #0056b3;
 			display: flex;
 		}
 
-		.tab-button {
-			background-color: #f8f9fa;
+		.tab - button {
+			background - color: #f8f9fa;
 			border: none;
-			border-bottom: 2px solid transparent;
+			border - bottom: 2px solid transparent;
 			/* Initially transparent */
-			border-radius: 4px 4px 0 0;
+			border - radius: 4px 4px 0 0;
 			cursor: pointer;
 			flex: 1;
 			/* Equal width for all tab buttons */
 			padding: 15px 20px;
-			text-align: center;
-			transition: border-bottom-color 0.3s ease;
+			text - align: center;
+			transition: border - bottom - color 0.3s ease;
 		}
 
-		.tab-button.active {
-			border-bottom-color: #0056b3;
+		.tab - button.active {
+			border - bottom - color: #0056b3;
 			/* Blue border for active tab */
 			color: #0056b3;
 			/* Blue text for active tab */
 		}
 
-		.tab-content {
-			/*SYF	display: none;*/
+		.tab - content {
+			/*SYF display: none;*/
 			display: none;
 			padding: 20px;
 			border: 1px solid #ccc;
-			border-top: none;
-			border-radius: 0 0 4px 4px;
+			border - top: none;
+			border - radius: 0 0 4px 4px;
 		}
 
-		.tab-content.active {
+		.tab - content.active {
 			display: block;
 		}
 
-		.btn-primary {
-			background-color: #007bff;
+		.btn - primary {
+			background - color: #007bff;
 			border: none;
-			border-radius: 4px;
+			border - radius: 4px;
 			color: #fff;
 			cursor: pointer;
 			padding: 10px 20px;
-			transition: background-color 0.3s ease;
+			transition: background - color 0.3s ease;
 		}
 
 		/*.btn-primary:hover {}*/
 
-		.input-container {
-			margin-bottom: 10px;
+		.input - container {
+			margin - bottom: 10px;
 			/* Add margin */
 		}
 
 		/* Added style for the API response box */
-		.api-response-box {
-			background-color: #f0f0f0;
+		.api - response - box {
+			background - color: #f0f0f0;
 			border: 1px solid #ccc;
-			border-radius: 4px;
+			border - radius: 4px;
 			padding: 10px;
-			margin-top: 20px;
-			text-align: justify;
+			margin - top: 20px;
+			text - align: justify;
 		}
 
-		.summary-type-container {
+		.summary - type - container {
 			display: flex;
-			align-items: center;
+			align - items: center;
 		}
 
-		.summary-type-container label {
-			margin-right: 10px;
+		.summary - type - container label {
+			margin - right: 10px;
 		}
 
 		select {
 			padding: 8px;
-			border-radius: 4px;
+			border - radius: 4px;
 			border: 1px solid #ccc;
-			font-size: 14px;
-			font-family: Arial, sans-serif;
-			margin-right: 10px;
+			font - size: 14px;
+			font - family: Arial, sans - serif;
+			margin - right: 10px;
 			/* Adjust spacing */
 		}
 	</style>
@@ -181,23 +189,14 @@
 			<textarea class="form-input" id="textEntitiesInput" rows="4" style="width: calc(100% - 20px); /* Subtract padding */ 
 															padding: 10px; border-radius: 8px; border: 1px solid #ccc; 																
 															background-color: #f8f9fa; font-family: Arial, sans-serif; 
-															resize: vertical;">GREEN SUPLLY, a Société par Actions Simplifiée with Trade Register number RCS  158.741.326  having  its  registered  office  located  at  14 rue de Villiers 75017 Paris FRANCE acting for the purpose of this Agreement in its own name and in the name and on behalf of its Affiliates.												
-			</textarea>
+															resize: vertical;">GREEN SUPPLY, a Société par Actions Simplifiée with Trade Register number RCS  158.741.326  having  its  registered  office  located  at  14 rue de Villiers 75017 Paris FRANCE acting for the purpose of this Agreement in its own name and in the name and on behalf of its Affiliates.
+															</textarea>
 
-			<!--<textarea class="form-input" id="textEntitiesInput" rows="4" style="width: calc(100% - 20px); /* Subtract padding */ 
-			padding: 10px; border-radius: 8px; border: 1px solid #ccc; 																
-			background-color: #f8f9fa; font-family: Arial, sans-serif; 
-			resize: vertical;">Extract the company name, RCS number and location from the text below.GREEN SUPLLY, a Société par Actions Simplifiée with Trade Register number RCS  158.741.326  having  its  registered  office  located  at  14 rue de Villiers 75017 Paris FRANCE acting for the purpose of this Agreement in its own name and in the name and on behalf of its Affiliates.												
-			</textarea>-->
-
-			<button type="submit" class="btn-primary" id="callApiButtonEntity">Extract the Metadata</button>
+			<br>
+			<button type="submit" class="btn-primary" id="callApiButtonEntity">Extract the Entities</button>
 			<div class="api-response-box">
 				<p><span id="checkedEntities"></span></p>
 			</div>
-			<!--
-			<p hidden>
-			<pre id="checkedEntities"></pre>
-			</p>-->
 		</div>
 	</div>
 
@@ -427,7 +426,6 @@
 					})
 					.catch(error => console.error('Error:', error.message));
 
-
 			} // end else empty apiKey
 		});
 
@@ -442,25 +440,6 @@
 			});
 			container.innerHTML += text;
 		};
-
-		/*	function renderEntities(functionArgs) {
-	
-				console.log("*** Display entities result");
-	
-				var companyName = "No company found";
-				if (functionArgs.Companies && functionArgs.Companies[0] && functionArgs.Companies[0].name) {
-					companyName = functionArgs.Companies[0].name;
-				}
-	
-				var locationName = "No location found";
-				if (functionArgs.Addresses && functionArgs.Addresses[0] && functionArgs.Addresses[0].name) {
-					locationName = functionArgs.Addresses[0].name;
-				}
-	
-				var entitiesToPrint = "We found the following entities : \n\n Company: " + companyName + " \n\nand Location: " + locationName;
-				document.getElementById("checkedEntities").textContent = entitiesToPrint;
-	
-			}*/
 
 	</script>
 </body>
