@@ -437,8 +437,8 @@
 			var text = `<p><strong>${entityType}:</strong></p>`;
 			entities.forEach(entity => {
 				console.log("*** Render entity:", entity)
-				var idOrName = entity.name || entity.id;
-				text += `<input type="checkbox" class="${entityType}" value="${entity.id}" data-name="${idOrName}"> ${idOrName}<br>`;
+				var nameOrLoc = entity.name || entity.location;
+				text += `<input type="checkbox" class="${entityType}" value="${entity.id}" data-name="${nameOrLoc}"> ${nameOrLoc}<br>`;
 			});
 			container.innerHTML += text;
 		};
