@@ -410,13 +410,13 @@
 									const functionArgs = JSON.parse(toolCall.function.arguments);
 									console.log("*** Parsing arguments done");
 									console.log(functionArgs);
-									//	console.log(functionArgs.Companies.name);
+									console.log(functionArgs.Companies[0].name);
+									document.getElementById("checkedEntities").textContent = functionArgs.Companies[0].name;
 
 								}
 
 							}
 
-							//document.getElementById("checkedEntities").textContent = data.choices[0].message.content;
 
 							/*const function_call = data.choices[0].finish_reason === "function_call";
 							try {
