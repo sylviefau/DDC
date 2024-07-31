@@ -313,7 +313,7 @@
 					}
 				];
 
-				const tools = [
+				const functions = [
 					{
 						"type": "function",
 						"function": {
@@ -400,10 +400,10 @@
 								console.log("*** Tool calls");
 							}*/
 
-							document.getElementById("checkedEntities").textContent = data.choices[0].message.content;
+							//document.getElementById("checkedEntities").textContent = data.choices[0].message.content;
 
-							//const function_call = data.choices[0].finish_reason === "function_call";
-							/*try {
+							const function_call = data.choices[0].finish_reason === "function_call";
+							try {
 								if (function_call) {
 
 									var content = data.choices[0].message.function_call.arguments;
@@ -428,7 +428,7 @@
 							catch (e) {
 								console.error("Parsing error:", e);
 								document.getElementById("checkedEntities").textContent = "Error parsing the API response.";
-							}*/
+							}
 
 						}
 					})
