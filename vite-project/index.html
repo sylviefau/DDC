@@ -1,0 +1,53 @@
+<!--<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+-->
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Vite App</title>
+</head>
+
+<body>
+  <div id="app">
+    <h2>Test Vite!</h2>
+  </div>
+
+  <p>API Key is defined in .env file</p>
+
+  <button type="submit" class="btn-primary" id="callApiButtonQa">Get the api key now</button>
+
+  <script>
+
+    document.getElementById("callApiButtonQa").addEventListener("click", function () {
+
+      // Get apiKey from .env
+      const apiKey = import.meta.env.VITE_API_KEY;   //'%VITE_API_KEY%';
+      if (!apiKey) {
+
+        console.log("*** API Key is empty");
+
+      } else {
+        console.log("*** API Key found:");
+        console.log("API Key:", import.meta.env.VITE_API_KEY);
+      }
+
+    })
+
+  </script>
+
+</body>
+
+</html>

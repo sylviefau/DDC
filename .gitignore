@@ -1,3 +1,5 @@
 # File for Env Variables #
 ##########################
 .env
+*.local
+env.js

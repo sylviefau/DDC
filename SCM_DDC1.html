@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <script src='./util/messagingUtil.js'></script>
+<script src='./env.js'></script>
 
 <!--<script>
 	require('dotenv').config();
@@ -230,8 +231,11 @@
 
 		document.getElementById("callApiButtonQa").addEventListener("click", function () {
 
+			// test env.js
+			const apiKey = API_KEY;
+
 			// apiKey is filled from the Data-Driven Content;
-			const apiKey = document.getElementById("api_key").textContent;
+			//const apiKey = document.getElementById("api_key").textContent;
 			if (!apiKey) {
 
 				console.error("API Key is empty");
@@ -278,8 +282,13 @@
 		});
 
 		document.getElementById("callApiButtonEntity").addEventListener("click", function () {
+
+			// test env.js
+			const apiKey = API_KEY;
+
 			// apiKey is filled from the Data-Driven Content;
-			const apiKey = document.getElementById("api_key").textContent;
+			//const apiKey = document.getElementById("api_key").textContent;
+
 			if (!apiKey) {
 
 				console.error("API Key is empty");
