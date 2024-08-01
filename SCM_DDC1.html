@@ -3,13 +3,6 @@
 <script src='./util/messagingUtil.js'></script>
 <script src='./env.js'></script>
 
-<!--<script>
-	require('dotenv').config();
-	apiKey = process.env.API_KEY;
-	console.log(apiKey);
-</script>
--->
-
 <head>
 	<title>Smart Contracts Management</title>
 	<style>
@@ -196,7 +189,7 @@
 
 	</div>
 
-	<p hidden><span id="api_key"></span> </p>
+	<!--<p hidden><span id="api_key"></span> </p>-->
 
 	<script>
 
@@ -215,12 +208,12 @@
 		va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
 
 		/* Defined the callback function called whenever there is a new message sent from VA */
-		function onDataReceived(vaMsgObj) {
+		/*function onDataReceived(vaMsgObj) {
 			console.log(vaMsgObj.data[0][0]);
 			if (vaMsgObj && vaMsgObj.data && vaMsgObj.data.length > 0) {
 				document.getElementById("api_key").textContent = vaMsgObj.data[0][0];
 			}
-		}
+		}*/
 
 		document.getElementById("callApiButton").addEventListener("click", function () {
 
