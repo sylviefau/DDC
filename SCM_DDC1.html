@@ -208,12 +208,13 @@
 		va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
 
 		/* Defined the callback function called whenever there is a new message sent from VA */
-		/*function onDataReceived(vaMsgObj) {
-			console.log(vaMsgObj.data[0][0]);
-			if (vaMsgObj && vaMsgObj.data && vaMsgObj.data.length > 0) {
-				document.getElementById("api_key").textContent = vaMsgObj.data[0][0];
-			}
-		}*/
+		function onDataReceived(vaMsgObj) {
+			/*	console.log(vaMsgObj.data[0][0]);
+				if (vaMsgObj && vaMsgObj.data && vaMsgObj.data.length > 0) {
+					document.getElementById("api_key").textContent = vaMsgObj.data[0][0];
+				}
+				*/
+		}
 
 		document.getElementById("callApiButton").addEventListener("click", function () {
 
