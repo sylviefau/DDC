@@ -189,8 +189,6 @@
 
 	</div>
 
-	<!--<p hidden><span id="api_key"></span> </p>-->
-
 	<script>
 
 		"use strict";
@@ -209,11 +207,6 @@
 
 		/* Defined the callback function called whenever there is a new message sent from VA */
 		function onDataReceived(vaMsgObj) {
-			/*	console.log(vaMsgObj.data[0][0]);
-				if (vaMsgObj && vaMsgObj.data && vaMsgObj.data.length > 0) {
-					document.getElementById("api_key").textContent = vaMsgObj.data[0][0];
-				}
-				*/
 		}
 
 		document.getElementById("callApiButton").addEventListener("click", function () {
@@ -225,19 +218,7 @@
 
 		document.getElementById("callApiButtonQa").addEventListener("click", function () {
 
-			// API key is in env
-
-			// apiKey is filled from the Data-Driven Content;
-			/*if (!apiKey) {
-
-				console.error("API Key is empty");
-				document.getElementById("apiResponseQ&A").textContent = "Error: API key is empty";
-
-			} else {
-*/
 			// Call Azure Services
-			//const endpoint = "https://frasyf-inst1.openai.azure.com";
-			//const apiUrl = '${endpoint}/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01';
 			const apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01";
 
 			const headers = {
@@ -268,20 +249,10 @@
 				)
 				.catch(error => console.error('Error:', error.message));
 
-
-			//		} // end else empty apiKey
-
 		});
 
 		document.getElementById("callApiButtonEntity").addEventListener("click", function () {
 
-			/*if (!apiKey) {
-
-				console.error("API Key is empty");
-				document.getElementById("checkedEntities").textContent = "Error: API key is empty";
-
-			} else {
-*/
 			// Call Azure Services
 			const apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01";
 
@@ -420,7 +391,6 @@
 				})
 				.catch(error => console.error('Error:', error.message));
 
-			//		} // end else empty apiKey
 		});
 
 		// Function to render entities with checkboxes
