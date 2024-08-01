@@ -231,210 +231,202 @@
 
 		document.getElementById("callApiButtonQa").addEventListener("click", function () {
 
-			// test env.js
-			const apiKey = API_KEY;
+			// API key is in env
 
 			// apiKey is filled from the Data-Driven Content;
-			//const apiKey = document.getElementById("api_key").textContent;
-			if (!apiKey) {
+			/*if (!apiKey) {
 
 				console.error("API Key is empty");
 				document.getElementById("apiResponseQ&A").textContent = "Error: API key is empty";
 
 			} else {
+*/
+			// Call Azure Services
+			//const endpoint = "https://frasyf-inst1.openai.azure.com";
+			//const apiUrl = '${endpoint}/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01';
+			const apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01";
 
-				// Call Azure Services
-				//const endpoint = "https://frasyf-inst1.openai.azure.com";
-				//const apiUrl = '${endpoint}/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01';
-				const apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01";
+			const headers = {
+				'Content-Type': 'application/json',
+				'api-key': API_KEY
+			};
 
-				const headers = {
-					'Content-Type': 'application/json',
-					'api-key': apiKey
-				};
+			// Retrieve the question from the textArea
+			var question = document.getElementById("textInput").value;
+			const dataQuestion = {
+				messages: [
+					{
+						role: 'user',
+						content: question
+					}
+				]
+			};
 
-				// Retrieve the question from the textArea
-				var question = document.getElementById("textInput").value;
-				const dataQuestion = {
-					messages: [
-						{
-							role: 'user',
-							content: question
-						}
-					]
-				};
+			fetch(apiUrl, {
+				method: 'POST',
+				headers: headers,
+				body: JSON.stringify(dataQuestion)
+			})
 
-				fetch(apiUrl, {
-					method: 'POST',
-					headers: headers,
-					body: JSON.stringify(dataQuestion)
-				})
-
-					.then(response => response.json())
-					.then(data =>
-						document.getElementById("apiResponseQ&A").textContent = data.choices[0].message.content
-					)
-					.catch(error => console.error('Error:', error.message));
+				.then(response => response.json())
+				.then(data =>
+					document.getElementById("apiResponseQ&A").textContent = data.choices[0].message.content
+				)
+				.catch(error => console.error('Error:', error.message));
 
 
-			} // end else empty apiKey
+			//		} // end else empty apiKey
 
 		});
 
 		document.getElementById("callApiButtonEntity").addEventListener("click", function () {
 
-			// test env.js
-			const apiKey = API_KEY;
-
-			// apiKey is filled from the Data-Driven Content;
-			//const apiKey = document.getElementById("api_key").textContent;
-
-			if (!apiKey) {
+			/*if (!apiKey) {
 
 				console.error("API Key is empty");
 				document.getElementById("checkedEntities").textContent = "Error: API key is empty";
 
 			} else {
+*/
+			// Call Azure Services
+			const apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01";
 
-				// Call Azure Services
-				const apiUrl = "https://frasyf-inst1.openai.azure.com/openai/deployments/DDC_API/chat/completions?api-version=2024-02-01";
+			const headers = {
+				'Content-Type': 'application/json',
+				'api-key': API_KEY
+			};
 
-				const headers = {
-					'Content-Type': 'application/json',
-					'api-key': apiKey
-				};
+			// Retrieve the question from the textArea
+			const text_content = document.getElementById("textEntitiesInput").value;
 
-				// Retrieve the question from the textArea
-				const text_content = document.getElementById("textEntitiesInput").value;
+			const messages = [
+				{
+					role: 'user',
+					content: "Using the following text, generate a list of Company entities, a list of Address entities, and the relationships between those entities, in valid json format. Use a 32 character hexadecimal globally unique identifier as the unique identifier for each entity. Generate a new json array for relationships between Company to Address under a object name companytoaddress. Each relationship type should be in a separate list. Be sure to use valid json format in your response, where each property is quoted, and each object is delineated with an open { and a close }. The entire response should be a json compliant string, there should be no extraneous verbiage in your response. Here is the text:" + text_content
+				}
+			];
 
-				const messages = [
-					{
-						role: 'user',
-						content: "Using the following text, generate a list of Company entities, a list of Address entities, and the relationships between those entities, in valid json format. Use a 32 character hexadecimal globally unique identifier as the unique identifier for each entity. Generate a new json array for relationships between Company to Address under a object name companytoaddress. Each relationship type should be in a separate list. Be sure to use valid json format in your response, where each property is quoted, and each object is delineated with an open { and a close }. The entire response should be a json compliant string, there should be no extraneous verbiage in your response. Here is the text:" + text_content
-					}
-				];
-
-				const tools = [
-					{
-						"type": "function",
-						"function": {
-							"name": "get_json_format", "parameters": {
-								"type": "object",
-								"properties": {
-									"Companies": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"name": {
-													"type": "string"
-												}
-											},
-											"required": ["id", "name"]
-										}
-									},
-									"Addresses": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "string"
-												},
-												"location": {
-													"type": "string"
-												}
-											},
-											"required": ["id", "location"]
-										}
-									},
-									"Relationships": {
+			const tools = [
+				{
+					"type": "function",
+					"function": {
+						"name": "get_json_format", "parameters": {
+							"type": "object",
+							"properties": {
+								"Companies": {
+									"type": "array",
+									"items": {
 										"type": "object",
 										"properties": {
-											"companytoaddress": {
-												"type": "array",
-												"items": {
-													"type": "object",
-													"properties": {
-														"companyId": {
-															"type": "string"
-														},
-														"addressId": {
-															"type": "string"
-														}
-													},
-													"required": ["companyId", "addressId"]
-												}
+											"id": {
+												"type": "string"
+											},
+											"name": {
+												"type": "string"
 											}
 										},
-										"required": []
+										"required": ["id", "name"]
 									}
 								},
-								"required": []
-							}
+								"Addresses": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string"
+											},
+											"location": {
+												"type": "string"
+											}
+										},
+										"required": ["id", "location"]
+									}
+								},
+								"Relationships": {
+									"type": "object",
+									"properties": {
+										"companytoaddress": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"companyId": {
+														"type": "string"
+													},
+													"addressId": {
+														"type": "string"
+													}
+												},
+												"required": ["companyId", "addressId"]
+											}
+										}
+									},
+									"required": []
+								}
+							},
+							"required": []
 						}
 					}
-				];
+				}
+			];
 
-				fetch(apiUrl, {
-					method: 'POST',
-					headers: headers,
-					body: JSON.stringify({
-						"model": "gpt-3.5-turbo",
-						"messages": messages,
-						"temperature": 0.0,
-						"tools": tools
-					}
-					)
-				})
-					.then(response => response.json())
-					.then(data => {
-						console.log("API Response:", data); // Log the API response for debugging
-
-
-						if (data && data.choices && data.choices[0] && data.choices[0].message) {
-							console.log("*** Message data received");
-
-							const responseMessage = data.choices[0].message;
-							const toolCalls = responseMessage.tool_calls;
-							console.log("*** Tool calls");
-
-							if (responseMessage.tool_calls) {
-
-								// Clear previous entities
-								document.getElementById("checkedEntities").innerHTML = "";
-
-								for (const toolCall of toolCalls) {
-									const functionName = toolCall.function.name;
-									console.log("*** Function name is :", functionName);
-									const functionArgs = JSON.parse(toolCall.function.arguments);
-									console.log(functionArgs);
-
-									if (functionArgs.Companies) {
-										renderEntities(functionArgs.Companies, "Companies");
-									}
-
-									if (functionArgs.Addresses) {
-										renderEntities(functionArgs.Addresses, "Addresses");
-									}
-
-									if (functionArgs.Relationships) {
-										renderEntitiesRel(functionArgs.Relationships, "Relationships");
-									}
+			fetch(apiUrl, {
+				method: 'POST',
+				headers: headers,
+				body: JSON.stringify({
+					"model": "gpt-3.5-turbo",
+					"messages": messages,
+					"temperature": 0.0,
+					"tools": tools
+				}
+				)
+			})
+				.then(response => response.json())
+				.then(data => {
+					console.log("API Response:", data); // Log the API response for debugging
 
 
+					if (data && data.choices && data.choices[0] && data.choices[0].message) {
+						console.log("*** Message data received");
+
+						const responseMessage = data.choices[0].message;
+						const toolCalls = responseMessage.tool_calls;
+						console.log("*** Tool calls");
+
+						if (responseMessage.tool_calls) {
+
+							// Clear previous entities
+							document.getElementById("checkedEntities").innerHTML = "";
+
+							for (const toolCall of toolCalls) {
+								const functionName = toolCall.function.name;
+								console.log("*** Function name is :", functionName);
+								const functionArgs = JSON.parse(toolCall.function.arguments);
+								console.log(functionArgs);
+
+								if (functionArgs.Companies) {
+									renderEntities(functionArgs.Companies, "Companies");
 								}
 
+								if (functionArgs.Addresses) {
+									renderEntities(functionArgs.Addresses, "Addresses");
+								}
+
+								if (functionArgs.Relationships) {
+									renderEntitiesRel(functionArgs.Relationships, "Relationships");
+								}
+
+
 							}
 
 						}
-					})
-					.catch(error => console.error('Error:', error.message));
 
-			} // end else empty apiKey
+					}
+				})
+				.catch(error => console.error('Error:', error.message));
+
+			//		} // end else empty apiKey
 		});
 
 		// Function to render entities with checkboxes
