@@ -29,11 +29,11 @@
         function onDataReceived(vaMsgObj) {
 
             console.log("*** arg0=", vaMsgObj.data[0][0]);
-            console.log(vaMsgObj.data[0][1]);
+            console.log("*** arg1=", vaMsgObj.data[0][1]);
             if (vaMsgObj && vaMsgObj.data && vaMsgObj.data.length > 0) {
                 document.getElementById("contractName").textContent = vaMsgObj.data[0][0];
             } else {
-                document.getElementById("contractName").innerHTML = "NAME HERE";
+                document.getElementById("contractType").innerHTML = vaMsgObj.data[0][1];
             }
         }
 
