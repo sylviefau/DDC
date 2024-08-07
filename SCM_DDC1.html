@@ -240,7 +240,7 @@
 				body: JSON.stringify({
 					"model": "gpt-3.5-turbo",
 					"messages": messages,
-					"temperature": 0.0,
+					"temperature": 0.2,
 					"tools": tools
 				}
 				)
@@ -276,10 +276,29 @@
 									renderEntities(functionArgs.Addresses, "Addresses");
 								}
 
-								if (functionArgs.Relationships) {
+								/*if (functionArgs.Relationships) {
 									renderEntitiesRel(functionArgs.Relationships, "Relationships");
-								}
+								}*/
 
+								// checked Entities
+								console.log("*** Build companies array");
+								var checkedCompanies = Array.from(document.querySelectorAll("input.Companies")).map(el => ({
+									id: el.value,
+									name: el.getAttribute("data-name")
+								}));
+
+								console.log("*** Build locations array");
+								var checkedAddresses = Array.from(document.querySelectorAll("input.Addresses")).map(el => ({
+									id: el.value,
+									name: el.getAttribute("data-name")
+								}));
+
+								console.log("*** Build checkedEntities object");
+								var checkedEntities = {
+									"Company": checkedCompanies,
+									"Address": checkedAddresses,
+									"Relationships": filterRelationships(functionArgs.Relationships, checkedCompanies, checkedAddresses)
+								};
 
 							}
 
@@ -304,19 +323,62 @@
 		};
 
 		function renderEntitiesRel(entities, entityType) {
+			console.log("*** RenderEntitiesRel");
 			var container = document.getElementById("checkedEntities");
 			var text = `<p><strong>${entityType}:</strong></p>`;
-			entities.forEach(entity => {
-				console.log("*** Render relationship:", entity)
+			entities.companytoaddress.forEach(entity => {
+				console.log("*** Render each companytoaddress:", entity)
 
-				// TODO !!!
-				//				entity.companytoaddress[0].companyId
+				var companyId = entity.companyId;
+				console.log("companyid= ", companyId)
+				var addressId = entity.addressId;
+				console.log("addressid= ", addressId)
 
-				//				var nameOrLoc = entity.name || entity.location;
-				//				text += `<input type="checkbox" class="${entityType}" value="${entity.id}" data-name="${nameOrLoc}"> ${nameOrLoc}<br>`;
+				// test filter
+
+				text += `<input type="checkbox" class="${entityType}" value="${entity.id}"> ${companyId} - ${addressId}<br>`;
 
 			});
 			container.innerHTML += text;
+		}
+
+		// Function to filter relationships
+		function filterRelationships(relationship, checkedCompanies, checkedAddresses) {
+			console.log("*** filterRelationships");
+
+			var container = document.getElementById("checkedEntities");
+			var text = `<p><strong>Facts</strong></p>`;
+
+
+			if (relationship && relationship.companytoaddress) {
+				console.log("*** relationship.companytoaddress", relationship.companytoaddress);
+
+				// display Facts
+				container.innerHTML += text;
+
+				relationship.companytoaddress.forEach(rel => {
+					if (rel.company) {
+						relCompany = checkedCompanies.find(company.id === rel.companyId);
+						console.log("*** relCompany=", relCompany);
+					} else {
+						console.log("*** no company in rel")
+					}
+					if (rel.address) {
+						relAddress = checkedAddresses.find(address.id === rel.addressId);
+						console.log("*** relAddress=", relAddress);
+					} else {
+						console.log("*** no address in rel")
+					}
+				}
+
+				)
+				//console.log("*** filteredRelationships", filteredRelationships);
+
+				//text += `<input type="checkbox" class="${entityType}" value="${entity.id}" data-name="${nameOrLoc}"> ${nameOrLoc}<br>`;
+				//container.innerHTML += text;
+
+			}
+
 		}
 	</script>
 </body>

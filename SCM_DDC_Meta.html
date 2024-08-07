@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<script src='./util/messagingUtil.js'></script>
+
+<head>
+    <title>Metadata Management</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="summary-type-container">
+            <label for="summaryTypeSelect">Contrat Name :</label>
+            <p><span id="contractName"></span></p>
+        </div>
+        <div class="summary-type-container">
+            <label for="summaryTypeSelect">Contrat Type :</label>
+            <p><span id="contractType"></span></p>
+        </div>
+
+    </div>
+
+    <script>
+
+        va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
+
+        /* Defined the callback function called whenever there is a new message sent from VA */
+        function onDataReceived(vaMsgObj) {
+
+            document.getElementById("contractName").innerHTML = "NAME HERE";
+            document.getElementById("contractType").innerHTML = "TYPE HERE";
+        }
+
+    </script>
+
+</body>
+
+</html>
