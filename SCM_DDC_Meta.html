@@ -28,7 +28,7 @@
         /* Defined the callback function called whenever there is a new message sent from VA */
         function onDataReceived(vaMsgObj) {
 
-            console.log(vaMsgObj.data[0][0]);
+            console.log("*** arg0=", vaMsgObj.data[0][0]);
             console.log(vaMsgObj.data[0][1]);
             if (vaMsgObj && vaMsgObj.data && vaMsgObj.data.length > 0) {
                 document.getElementById("contractName").textContent = vaMsgObj.data[0][0];
