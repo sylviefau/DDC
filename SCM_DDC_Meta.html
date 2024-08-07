@@ -28,8 +28,15 @@
         /* Defined the callback function called whenever there is a new message sent from VA */
         function onDataReceived(vaMsgObj) {
 
-            document.getElementById("contractName").innerHTML = "NAME HERE";
-            document.getElementById("contractType").innerHTML = "TYPE HERE";
+            console.log(vaMsgObj.data[0][0]);
+            console.log(vaMsgObj.data[0][1]);
+            if (vaMsgObj && vaMsgObj.data && vaMsgObj.data.length > 0) {
+                document.getElementById("contractName").textContent = vaMsgObj.data[0][0];
+                document.getElementById("contractType").textContent = vaMsgObj.data[0][1];
+            } else {
+                document.getElementById("contractName").innerHTML = "NAME HERE";
+                document.getElementById("contractType").innerHTML = "TYPE HERE";
+            }
         }
 
     </script>
