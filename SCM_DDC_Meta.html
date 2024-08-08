@@ -12,12 +12,61 @@
     <div class="container">
         <div class="summary-type-container">
             <label for="summaryTypeSelect">Contrat Name :</label>
-            <p><span id="contractName"></span></p>
+            <p><b><span id="contractName"></span></b></p>
         </div>
         <div class="summary-type-container">
             <label for="summaryTypeSelect">Contrat Type :</label>
             <p><span id="contractType"></span></p>
         </div>
+        <div class="summary-type-container">
+            <label for="summaryTypeSelect">Edition date :</label>
+            <p><span id="editionDate"></span></p>
+        </div>
+
+        <p />
+        <div class="row">
+
+            <!--<div class="divBox">-->
+            <div class="column">
+                <div class="summary-type-container">
+                    <label for="summaryTypeSelect"><b>Supplier</b></label>
+                    </p>
+                </div>
+                <div class="summary-type-container">
+                    <label for="summaryTypeSelect">Name :</label>
+                    <p><span id="supplierName"></span></p>
+                </div>
+                <div class="summary-type-container">
+                    <label for="summaryTypeSelect">Address :</label>
+                    <p><span id="supplierAddress"></span></p>
+                </div>
+                <div class="summary-type-container">
+                    <label for="summaryTypeSelect">Registration Number :</label>
+                    <p><span id="supplierRegNumber"></span></p>
+                </div>
+            </div>
+            <!--<div class="divBox">-->
+            <div class="column">
+                <div class="summary-type-container">
+                    <label for="summaryTypeSelect"><b>Customer</b></label>
+                    </p>
+                </div>
+                <div class="summary-type-container">
+                    <label for="summaryTypeSelect">Name :</label>
+                    <p><span id="customerName"></span></p>
+                </div>
+                <div class="summary-type-container">
+                    <label for="summaryTypeSelect">Address :</label>
+                    <p><span id="customerAddress"></span></p>
+                </div>
+                <div class="summary-type-container">
+                    <label for="summaryTypeSelect">Registration Number :</label>
+                    <p><span id="customerRegNumber"></span></p>
+                </div>
+            </div>
+        </div>
+
+
 
     </div>
 
@@ -28,12 +77,24 @@
         /* Defined the callback function called whenever there is a new message sent from VA */
         function onDataReceived(vaMsgObj) {
 
-            console.log("*** arg0=", vaMsgObj.data[0][0]);
-            console.log("*** arg1=", vaMsgObj.data[0][1]);
             if (vaMsgObj && vaMsgObj.data && vaMsgObj.data.length > 0) {
+
+                console.log("*** NB lignes=", vaMsgObj.rowCount);
+
                 document.getElementById("contractName").textContent = vaMsgObj.data[0][0];
-            } else {
                 document.getElementById("contractType").innerHTML = vaMsgObj.data[0][1];
+                document.getElementById("editionDate").innerHTML = vaMsgObj.data[0][2];
+
+                console.log("*** Get supplier infos");
+                document.getElementById("supplierName").innerHTML = vaMsgObj.data[0][3];
+                document.getElementById("supplierAddress").innerHTML = vaMsgObj.data[0][4];
+                document.getElementById("supplierRegNumber").innerHTML = vaMsgObj.data[0][5];
+
+                console.log("*** Get customer infos");
+                document.getElementById("customerName").innerHTML = vaMsgObj.data[1][3];
+                document.getElementById("customerAddress").innerHTML = vaMsgObj.data[1][4];
+                document.getElementById("customerRegNumber").innerHTML = vaMsgObj.data[1][5];
+
             }
         }
 
